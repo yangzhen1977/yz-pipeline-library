@@ -10,8 +10,8 @@ import java.nio.file.Files
 import java.util.regex.Pattern
 
 
-def call(Map parameters = [:], Closure body){
-    def job_params=parameters.get("job_params", [])
+def call(Map step_params = [:], Closure body){
+    def job_params=step_params.get("job_params", parameters([]))
     def block_build = [
         $class: 'BuildBlockerProperty',
         useBuildBlocker: true,
@@ -42,9 +42,7 @@ def call(Map parameters = [:], Closure body){
             overrideBuildParameters: false,
 
         ],
-        parameters(
-            job_params
-        ),
+        job_params,
     ]
 
     properties(property_ls)
